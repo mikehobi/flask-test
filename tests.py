@@ -47,7 +47,7 @@ class FlaskTestCase(unittest.TestCase):
 	def test_posts_on_index(self):
 		tester = app.test_client()
 		response = tester.post('/login', data=dict(user="admin", password="admin"), follow_redirects = True)
-		self.assertIn(b'niceeeeeee', response.data)
+		self.assertIn(b'SHell', response.data)
 
 
 if __name__ == '__main__':

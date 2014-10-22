@@ -1,9 +1,17 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
 * + * {
 	margin-top: 1.5em;
 }
+html, body {
+	min-height: 100%;
+}
 body {
-	background: #eee;
-	font-size: 14px;
+	background: url(https://unsplash.imgix.net/reserve/de9uL9L7RSmzV4SAoAO5_Lauren%20and%20Winona%20Under%20a%20pass-1.jpg?q=75&fm=jpg&s=c0435c5678a4cece85eaa8449ab34b96) center center no-repeat;
+	background-size: cover;
+	font-size: 12px;
 	line-height: 1.5em;
 	margin: 0;
 	font-family: Helvetica, sans-serif;
@@ -15,10 +23,17 @@ body {
 }
 .message {
 	background: #fff4a6;
+	border-bottom: #d9d18d;
 	padding: .5em 1.5em;
 	margin: 0;
 }
+.outer-box {
+	background: rgba(0,0,0,0.5);
+	color: white;
+	padding: 1.5em;
+}
 .box {
-	background: white;
-	padding: .5em 1.5em;
+	background: rgba(255,255,255,0.5);
+	padding: 1.5em;
+	color: black;
 }
