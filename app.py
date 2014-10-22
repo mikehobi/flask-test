@@ -7,7 +7,6 @@ app = Flask(__name__)
 # config
 import os
 app.config.from_object(os.environ['APP_SETTINGS'])
-print os.environ['APP_SETTINGS']
 
 # sqlalchemy object
 db = SQLAlchemy(app)
@@ -54,9 +53,6 @@ def logout():
 	session.pop('logged_in', None)
 	flash('You just logged out')
 	return redirect(url_for('welcome'))
-
-# def connect_db():
-# 	return sqlite3.connect(app.database)
 
 if __name__ == '__main__':
 	app.run()
