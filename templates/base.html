@@ -7,9 +7,12 @@
 		<link rel="stylesheet" href="static/style.css">
 		{% endblock %}
 	</head>
-	<body>	
 		{% for message in get_flashed_messages() %}
-			{{message}}
+		<div class="message">
+			<div class="container">
+					{{message}}
+			</div>
+		</div>
 		{% endfor %}
 		<div class="container">
 			{% block content %}

@@ -2,6 +2,7 @@ body {
 	background: #eee;
 	font-size: 14px;
 	line-height: 1.5em;
+	margin: 0;
 	font-family: Helvetica, sans-serif;
 }
 * + * {
@@ -11,6 +12,10 @@ body {
 	width: 80%;
 	margin: 0 auto;
 	max-width: 700px;
+}
+.message {
+	background: #fff4a6;
+	padding: .5em 1.5em;
 }
 .box {
 	background: white;

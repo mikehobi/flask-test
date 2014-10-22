@@ -5,7 +5,7 @@ import sqlite3
 app = Flask(__name__)
 
 app.secret_key = "anything"
-app.database = "sample.db"
+app.database = "samle.db"
 
 def login_required(f):
 	@wraps(f)
@@ -24,9 +24,9 @@ def index():
 	try: 
 		g.db = connect_db()
 		cur = g.db.execute('select * from posts')
-		# posts = [dict(title=row[0],description=row[1]) for row in cur.fetchall()]
+		posts = [dict(title=row[0],description=row[1]) for row in cur.fetchall()]
 		g.db.close()
-	except sqlite3.OperationalError
+	except sqlite3.OperationalError:
 		flash("no db dude")
 	return render_template('index.html', posts=posts)
 
