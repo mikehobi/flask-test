@@ -1,12 +1,12 @@
+* + * {
+	margin-top: 1.5em;
+}
 body {
 	background: #eee;
 	font-size: 14px;
 	line-height: 1.5em;
 	margin: 0;
 	font-family: Helvetica, sans-serif;
-}
-* + * {
-	margin-top: 1.5em;
 }
 .container {
 	width: 80%;
@@ -16,6 +16,7 @@ body {
 .message {
 	background: #fff4a6;
 	padding: .5em 1.5em;
+	margin: 0;
 }
 .box {
 	background: white;
