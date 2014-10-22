@@ -9,6 +9,7 @@ db.create_all()
 db.session.add(BlogPost("Good", "Bad"))
 db.session.add(BlogPost("Great", "Dandy"))
 db.session.add(BlogPost("Good", "Bad"))
+db.session.add(BlogPost("WORK", "GDFGA"))
 
 
 
