@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Flask Tut</title>
+		{% block stylesheets %}
+		<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+		<link rel="stylesheet" href="static/style.css">
+		{% endblock %}
+	</head>
+	<body>	
+		{% for message in get_flashed_messages() %}
+			{{message}}
+		{% endfor %}
+		<div class="container">
+			{% block content %}
+
+			{% endblock %}
+		</diV>
+	</body>
+</html>

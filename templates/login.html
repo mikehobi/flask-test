@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="hello">
+		<h1>Login dude</h1>
+		<div class="box">
+			<form action="" method="post">
+				<input type="text" placeholder="Username" name="user" value="{{request.form.user}}">
+				<input type="text" placeholder="Password" name="password" value="{{request.form.password}}">
+				<input type="submit" value="Login">
+			</form>
+		</div>
+		{% if error %}
+			<p style="background: #733;color: #fff;">{{error}}</p>
+		{% endif %}
+	</div>
+{% endblock %}
