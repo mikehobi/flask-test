@@ -2,3 +2,10 @@ venv
 *.pyc
 *.db
 dbcreate.py
+
+# OSX
+.DS_STORE
+AppleDouble
+
+# SASS
+*.sass-cache
