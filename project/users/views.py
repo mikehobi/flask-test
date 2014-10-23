@@ -1,7 +1,4 @@
 from flask import flash, redirect, render_template, request, session, url_for, Blueprint
-from app import app
-from flask.ext.bcrypt import Bcrypt
-bcrypt = Bcrypt(app)
 from functools import wraps
 
 users_blueprint = Blueprint(
@@ -28,7 +25,7 @@ def login():
 		else:
 			session['logged_in'] = True
 			flash('You just logged in!')
-			return redirect(url_for('index'))
+			return redirect(url_for('home.index'))
 	return render_template('login.html', error=error)
 
 @users_blueprint.route('/logout')
@@ -36,4 +33,4 @@ def login():
 def logout():
 	session.pop('logged_in', None)
 	flash('You just logged out')
-	return redirect(url_for('welcome'))
+	return redirect(url_for('home.welcome'))
