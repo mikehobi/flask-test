@@ -1,36 +1,32 @@
-from flask import flash, redirect, render_template, request, session, url_for, Blueprint
-from functools import wraps
+from flask import flash, redirect, render_template, request, url_for, Blueprint
+from flask.ext.login import login_user, login_required, logout_user
+from form import LoginForm
+from project.models import User, bcrypt
 
 users_blueprint = Blueprint(
 	'users', __name__,
 	template_folder='templates'
 )
 
-def login_required(f):
-	@wraps(f)
-	def wrap(*args, **kwargs):
-		if 'logged_in' in session:
-			return f(*args, **kwargs)
-		else:
-			flash('You need to login first.')
-			return redirect(url_for('login'))
-	return wrap
-
 @users_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
 	error = None
+	form = LoginForm(request.form)
 	if request.method == 'POST':
-		if request.form['user'] != 'admin' or request.form['password'] != 'admin':
-			error = 'Oops. That username or password is incorrect.'
-		else:
-			session['logged_in'] = True
-			flash('You just logged in!')
-			return redirect(url_for('home.index'))
-	return render_template('login.html', error=error)
+		if form.validate_on_submit():
+			user = User.query.filter_by(name=request.form['user']).first()
+			if user is not None and bcrypt.check_password_hash(user.password, request.form['password']):
+				# session['logged_in'] = True
+				login_user(user)
+				flash('You just logged in!')
+				return redirect(url_for('home.index'))
+			else:
+				error = 'Oops. That username or password is incorrect.'
+	return render_template('login.html', form=form, error=error)
 
 @users_blueprint.route('/logout')
 @login_required
 def logout():
-	session.pop('logged_in', None)
-	flash('You just logged out')
-	return redirect(url_for('home.welcome'))
+    logout_user()
+    flash('You were logged out.')
+    return redirect(url_for('home.welcome'))
