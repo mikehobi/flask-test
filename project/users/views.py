@@ -1,7 +1,8 @@
 from flask import flash, redirect, render_template, request, url_for, Blueprint
-from flask.ext.login import login_user, login_required, logout_user
-from form import LoginForm
-from project.models import User, bcrypt
+from flask.ext.login import login_user, login_required, logout_user, current_user
+from form import LoginForm, SignupForm, PostForm
+from project import app, db
+from project.models import User, BlogPost, bcrypt
 
 users_blueprint = Blueprint(
 	'users', __name__,
@@ -30,3 +31,32 @@ def logout():
     logout_user()
     flash('You were logged out.')
     return redirect(url_for('home.welcome'))
+
+@users_blueprint.route('/signup', methods=['GET', 'POST'])
+def signup():
+	form = SignupForm()
+   	if request.method == 'POST':
+	    if form.validate() == False:
+	     	return render_template('signup.html', form=form)
+	    else:
+			newuser = User(form.user.data, form.email.data, form.password.data)
+			db.session.add(newuser)
+			db.session.commit()
+			return redirect(url_for('home.index'))	
+	elif request.method == 'GET':
+  		return render_template('signup.html', form=form)
+
+@users_blueprint.route('/post', methods=['GET', 'POST'])
+@login_required
+def new_post():
+	form = PostForm()
+	if request.method == 'POST':
+		if form.validate() == False:
+			return render_template('post.html', form=form)
+		else: 
+			newpost = BlogPost(form.title.data, form.description.data, current_user.id)
+			db.session.add(newpost)
+			db.session.commit()
+			return redirect(url_for('home.index'))
+	elif request.method == 'GET':
+		return render_template('post.html', form=form)

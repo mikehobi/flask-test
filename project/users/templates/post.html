@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="outer-box">
+	<h1>Ready to post?</h1>
+
+	<form action="{{ url_for('.new_post') }}" method="post">
+	{{ form.csrf_token }}
+		<p>
+			{{ form.title(placeholder="Title") }}
+			{% for message in form.title.errors %}
+				<div class="flash">{{ message }}</div>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.description(placeholder="Write your masterpiece here") }}
+			{% for message in form.description.errors %}
+			<div class="flash">{{ message }}</div>
+			{% endfor %}
+		</p>
+		  <button type="submit">Post!</button>
+	</form>
+
+</div>
+{% endblock %}

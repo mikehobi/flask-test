@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 	<div class="hello outer-box">
-		<h1>Hello Pluto</h1>
+		<h1>Hello {{ current_user.name }}</h1>
 		<p>{{posts|length}} total posts</p>
 		{% for post in posts %}
 		<div class="box">
