@@ -14,7 +14,9 @@ home_blueprint = Blueprint(
 
 @home_blueprint.route('/')
 def index():
-	return render_template('index.html')
+	users = db.session.query(User)
+	
+	return render_template('index.html', users=users)
 
 @home_blueprint.route('/give', methods=['GET', 'POST'])
 def give():

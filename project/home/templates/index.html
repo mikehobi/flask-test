@@ -2,5 +2,8 @@
 {% block content %}
 	<div class="hello outer-box">
 		<h1>Points!</h1>
+		{% for user in users %}
+			<h1>{{user.name}} has {{ user.points|length }} points!</h1>
+		{% endfor %}
 	</div>
 {% endblock %}
