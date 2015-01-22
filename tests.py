@@ -2,7 +2,7 @@ import unittest
 from flask.ext.testing import TestCase
 from flask.ext.login import current_user
 from project import app, db
-from project.models import User, BlogPost
+from project.models import User
 
 
 class BaseTestCase(TestCase):
@@ -14,7 +14,7 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         db.create_all()
-        db.session.add(BlogPost("Test post", "This is a test. Only a test."))
+        # db.session.add(BlogPost("Test post", "This is a test. Only a test."))
         db.session.add(User("admin", "admin@admin.com", "admin"))
         db.session.commit()
 

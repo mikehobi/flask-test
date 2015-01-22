@@ -1,6 +1,6 @@
-from project import app, db
-from project.models import BlogPost, User
-from flask import flash, redirect, render_template, request, url_for, Blueprint
+from project import db
+from project.models import User
+from flask import flash, redirect, render_template, url_for, Blueprint
 from flask.ext.login import login_required
 
 home_blueprint = Blueprint(
@@ -13,8 +13,7 @@ home_blueprint = Blueprint(
 @home_blueprint.route('/')
 @login_required
 def index():
-	posts = db.session.query(BlogPost).all()
-	return render_template('index.html', posts=posts)
+	return render_template('index.html')
 
 @home_blueprint.route('/welcome')
 def welcome():

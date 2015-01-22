@@ -1,14 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 	<div class="hello outer-box">
-		<h1>Hello {{ current_user.name }}</h1>
-		<p>{{posts|length}} total posts</p>
-		{% for post in posts %}
-		<div class="box">
-			<h2> {{post.title}}</h2>
-			<p>{{post.description}}</p>
-			<p>- by <strong>{{post.author.name}}</strong></p>
-		</div>
-		{% endfor %}
+		<h1>Points!</h1>
+		{# for post in posts #}
+
+		{# endfor #}
 	</div>
 {% endblock %}
