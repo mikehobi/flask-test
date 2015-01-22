@@ -5,8 +5,9 @@
 		<h1>Give Points!</h1>
         <form method="POST">
 	        {{ form.csrf_token }}
-	        {{ render_field(form.user,placeholder='user') }}
-	        {{ render_field(form.amount,placeholder='points') }}
+	        {{ render_field(form.from_user,placeholder='From') }}
+	        {{ render_field(form.user,placeholder='To') }}
+	        {{ render_field(form.amount,placeholder='Amount of Points') }}
 	        <input type="submit" value="Give &rarr;">
 		</form>
 	</div>

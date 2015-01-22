@@ -29,15 +29,11 @@ class User(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String, nullable=False)
-	email = db.Column(db.String, nullable=False)
-	password = db.Column(db.String, nullable=False)
 	points_to_give = db.Column(db.Integer)
 	points = relationship("Point", backref="user")
 
-	def __init__(self, name, email, password):
+	def __init__(self, name):
 		self.name = name
-		self.email = email
-		self.password = bcrypt.generate_password_hash(password)
 
 	def is_authenticated(self):
 		return True
