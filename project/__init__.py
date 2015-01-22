@@ -2,10 +2,9 @@
 #### imports ####
 #################
 
-from flask import Flask
+from flask import Flask, render_template, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
-from flask.ext.login import LoginManager
 import os
 
 ################
@@ -14,8 +13,6 @@ import os
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
 app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
 
@@ -26,12 +23,14 @@ from project.home.views import home_blueprint
 app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
 
+@app.errorhandler(403)
+def server_error_403(error):
+    return redirect(url_for('home.index'))
 
-from models import User
+@app.errorhandler(404)
+def server_error_404(error):
+    return render_template('404.html'), 404
 
-login_manager.login_view = "users.login"
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.filter(User.id == int(user_id)).first()
+@app.errorhandler(500)
+def server_error_500(error):
+    return render_template('500.html'), 500

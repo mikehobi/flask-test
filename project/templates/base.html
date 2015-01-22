@@ -4,7 +4,7 @@
 		<title>Flask Tut</title>
 		{% block stylesheets %}
 		<link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-		<link rel="stylesheet" href="static/style.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 		{% endblock %}
 	</head>
 		{% for message in get_flashed_messages() %}

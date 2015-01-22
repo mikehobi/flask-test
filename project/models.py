@@ -1,8 +1,10 @@
-from project import db
-from project import bcrypt
+from datetime import datetime
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+
+from project import db
+from project import bcrypt
 
 # class BlogPost(db.Model):
 
@@ -56,7 +58,8 @@ class Point(db.Model):
 	__tablename__ = "points"
 
 	id = db.Column(db.Integer, primary_key=True)
+	created_at = db.Column(db.DateTime)
 	user_id = db.Column(db.Integer, ForeignKey('users.id'))
 
-	def __init__(self, title, description, author_id):
- 		self.title = title
+	def __init__(self, user_id):
+ 		self.user_id = user_id

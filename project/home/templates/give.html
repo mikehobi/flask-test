@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "forms.html" import render_field %}
+{% block content %}
+	<div class="hello outer-box">
+		<h1>Give Points!</h1>
+        <form method="POST">
+	        {{ form.csrf_token }}
+	        {{ render_field(form.user,placeholder='user') }}
+	        {{ render_field(form.amount,placeholder='points') }}
+	        <input type="submit" value="Give &rarr;">
+		</form>
+	</div>
+{% endblock %}
