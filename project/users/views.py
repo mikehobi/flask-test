@@ -1,6 +1,6 @@
 from flask import flash, redirect, render_template, request, url_for, Blueprint
 from flask.ext.login import login_user, login_required, logout_user
-from form import LoginForm, SignupForm
+from form import LoginForm
 from project import db
 from project.models import User, bcrypt
 
