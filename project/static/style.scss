@@ -59,7 +59,9 @@ div.user {
 		background-color: rgba(40,50,50,1);
 	}
 	small {
-		font-size: .4em;
+		font-size: .36em;
+		display: block;
+		margin-top: 10px;
 	}
 	.pts-today {
 		font-size: 3em;
@@ -69,7 +71,7 @@ div.user {
 	}
 	.pts-all {
 		display: block;
-		font-size: 1.5em;
+		font-size: 1.9em;
 		position: relative;
 		z-index: 1;
 	}
@@ -89,6 +91,15 @@ div.user {
 			background: rgba(0,0,0,0.1);
 		}
 	}
+    @media all and (max-width: 1000px) {
+    	width: 25%;
+    }
+    @media all and (max-width: 758px) {
+    	width: 50%;
+    }
+    @media all and (max-width: 570px) {
+    	width: 100%;
+    }
 }
 .box {
 	background: rgba(255,255,255,1);

@@ -25,6 +25,11 @@ from project.home.views import home_blueprint
 app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
 
+@slack.command('points', token='zhFK4jkUMxUlaEUsP6lE05kY', team_id='T0001', methods=['POST'])
+def response():
+    text = 'some text'
+    return slack.response(text)
+
 @app.errorhandler(403)
 def server_error_403(error):
     return redirect(url_for('home.index'))

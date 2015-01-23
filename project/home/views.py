@@ -14,12 +14,6 @@ home_blueprint = Blueprint(
 
 # ROUTES
 
-@slack.command('points', token='zhFK4jkUMxUlaEUsP6lE05kY',
-               team_id='T0001', methods=['POST'])
-def your_method(**kwargs):
-    text = kwargs.get('this is some goddamn text')
-    return slack.response(text)
-
 @home_blueprint.route('/')
 def index():
 	users = db.session.query(User).all()
