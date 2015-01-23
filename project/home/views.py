@@ -31,13 +31,13 @@ def index():
 @home_blueprint.route('/give', methods=['GET', 'POST'])
 @slack.command('points', token='qm76q99wz5FNKiNvoYCVkfnw', team_id='T0001', methods=['POST'])
 def response():
-	channel = request.form.get('channel_name')
+	channel = request.form['channel_name']
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
-	if not request.form.get('text'):
+	if not request.form['text']:
 		return slack.response('type "/points [user] [amount]" to give <http://hobiz.herokuapp.com/|POINTS!>')
-	from_user = request.form.get('user_name')
-	text = request.form.get('text').split()
+	from_user = request.form['user_name']
+	text = request.form['text'].split()
 	from_user = db.session.query(User).filter(User.name == from_user).first()
 	if text[0] == 'help':
 		return slack.response('figure out yourself, just kidding <http://hobiz.herokuapp.com/halp|click here bro>')
