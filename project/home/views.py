@@ -33,6 +33,10 @@ def index():
 def response():
     from_user = request.form['user_name']
     text = request.form['text'].split()
+    if text[0] == 'img_url':
+    	from_user = db.session.query(User).filter(User.name == from_user).first()
+    	from_user.img_url = text[1]
+    	return slack.response('You just changed your image, congratz')
     to_user = text[0]
     points = int(text[1])
     from_user = db.session.query(User).filter(User.name == from_user).first()
