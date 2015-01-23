@@ -15,7 +15,7 @@ home_blueprint = Blueprint(
 @home_blueprint.route('/')
 def index():
 	users = db.session.query(User)
-
+	users = sorted(users, key= lambda x: users[x].redemptions, reverse=True)
 	return render_template('index.html', users=users)
 
 @home_blueprint.route('/give', methods=['GET', 'POST'])
@@ -23,7 +23,10 @@ def give():
 	points_form = GivePoints()
 
 	if points_form.validate_on_submit():
+		# get the from user
 		from_user = db.session.query(User).filter(User.name == points_form.from_user.data).first()
+
+		# get the to user
 		user = db.session.query(User).filter(User.name == points_form.user.data).first()
 		if user != None and from_user != None:
 			available_points = from_user.points_to_give
@@ -35,7 +38,7 @@ def give():
 				for i in range(0,n):
 					point = Point(user.id)
 					db.session.add(point)
-				flash('you gave points!')
+				flash('You gave {} points!').format(user.name)
 				db.session.commit()
 				return redirect( url_for('home.index') )
 		else:

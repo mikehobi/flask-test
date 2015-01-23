@@ -28,8 +28,9 @@ class User(db.Model):
 	__tablename__ = "users"
 
 	id = db.Column(db.Integer, primary_key=True)
+	created_at = db.Column(db.DateTime, default=datetime.now)
 	name = db.Column(db.String, nullable=False)
-	points_to_give = db.Column(db.Integer)
+	points_to_give = db.Column(db.Integer, default=20)
 	points = relationship("Point", backref="user")
 
 	def __init__(self, name):
@@ -55,7 +56,7 @@ class Point(db.Model):
 	__tablename__ = "points"
 
 	id = db.Column(db.Integer, primary_key=True)
-	created_at = db.Column(db.DateTime)
+	created_at = db.Column(db.DateTime, default=datetime.now)
 	user_id = db.Column(db.Integer, ForeignKey('users.id'))
 
 	def __init__(self, user_id):
