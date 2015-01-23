@@ -34,13 +34,14 @@ def response():
     from_user = request.form['user_name']
     text = request.form['text'].split()
     from_user = db.session.query(User).filter(User.name == from_user).first()
+    if text[0] == 'wut':
+    	return slack.response('What do you mean wut? it\'s POINTS man')
     if text[0] == 'img':
     	from_user.img_url = text[1]
     	db.session.commit()
     	return slack.response('You just changed your image, congratz')
     to_user = text[0]
     points = int(text[1])
-    from_user = db.session.query(User).filter(User.name == from_user).first()
     to_user = db.session.query(User).filter(User.name == to_user).first()
     if to_user != None and from_user != None:
     	available_points = from_user.points_to_give

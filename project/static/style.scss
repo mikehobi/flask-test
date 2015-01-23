@@ -23,7 +23,10 @@ h1 {
 	color: #bff194;
 	text-align: center;
 	margin-top: 1.6em;
-	font-size: 3em;
+	font-size: 3.4em;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	@include animation( prettycolors 10s ease-in-out infinite alternate );
 }
 .container {
 	width: 100%;

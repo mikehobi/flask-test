@@ -9,3 +9,23 @@
 		@include transform( scaleY(1) scale(1) translateY(0px) );
 	}
 }
+@include keyframes( prettycolors ) {
+	0% {
+		color: rgb(244,44,44);
+	}
+	20% {
+		color: rgb(244,244,44);
+	}
+	40% {
+		color: rgb(44,244,44);
+	}
+	60% {
+		color: rgb(44,244,244);
+	}
+	80% {
+		color: rgb(44,44,244);
+	}
+	100% {
+		color: rgb(255,255,255);
+	}
+}
