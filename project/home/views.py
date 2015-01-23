@@ -1,3 +1,5 @@
+from datetime import date
+
 from flask import flash, redirect, render_template, url_for, Blueprint
 
 from project import db
@@ -17,15 +19,8 @@ def index():
 	users = db.session.query(User).all()
 
 	for user in users:
-		points = db.session.query(Point).filter_by(user_id=user.id).count()
+		points = db.session.query(Point).filter(Point.created_at >= date.today()).filter_by(user_id=user.id).count()
 		user.points_today = points
-
-	# SELECT users.name, COUNT(points.id) FROM points JOIN users ON points.user_id=users.id GROUP BY name;
-	# users = db.session.query(User, db.func.count(Point.id)).outerjoin(Point).group_by(User.id)
-
-	# user = db.session.query(Point.id, func.count(Run.session_id).label('count')).group_by(Run.session_id).subquery()
-	# result = db.session.query(Session, sq.c.count).join(sq, sq.c.session_id == Session.id).all()
-	# qry = select([ this.id, select([func.count().label('xx')], this.id == that.this_id).as_scalar().label('thatcount'), ])
 
 	ctx = {
         'users': users

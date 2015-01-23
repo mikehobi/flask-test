@@ -1,40 +1,96 @@
+@import 'bourbon/bourbon';
+@import 'neat/neat';
+
 * {
 	box-sizing: border-box;
 }
 * + * {
-	margin-top: 1.5em;
+	margin-top: 1em;
 }
 html, body {
 	min-height: 100%;
 }
 body {
-	background: #eee;
+	background: #111;
+	color: white;
 	font-size: 16px;
 	line-height: 1.5em;
 	margin: 0;
 	font-family: Helvetica, sans-serif;
 }
+h1 {
+	color: #bff194;
+	text-align: center;
+	margin-top: 1.6em;
+	font-size: 3em;
+}
 .container {
-	width: 80%;
+	width: 100%;
 	margin: 0 auto;
-	max-width: 700px;
 }
 .message {
+	color: black;
 	background: #fff4a6;
 	border-bottom: #d9d18d;
 	padding: .5em 1.5em;
 	margin: 0;
 }
-.outer-box {
-	color: #222;
-	padding: 1.5em;
+div.user {
+	width: 14.2857143%;
+	float: left;
+	padding: .1em 1em;
+	letter-spacing: 1px;
+	text-align:center;
+	position: relative;
+	background: {
+		size: cover;
+		repeat: no-repeat;
+	}
+	h2 {
+		font-size: 2em;
+		margin-bottom:3em;
+		position: relative;
+		z-index: 1;
+	}
+	&:nth-of-type(2n) {
+		background-color: rgba(40,50,50,1);
+	}
+	small {
+		font-size: .4em;
+	}
+	.pts-today {
+		font-size: 3em;
+		display: block;
+		position: relative;
+		z-index: 1;
+	}
+	.pts-all {
+		display: block;
+		font-size: 1.5em;
+		position: relative;
+		z-index: 1;
+	}
+	&:after {
+		content:'';
+		background: rgba(0,0,0,0.3);
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 0;
+	}
+	&:hover {
+		&:after {
+			background: rgba(0,0,0,0.1);
+		}
+	}
 }
 .box {
 	background: rgba(255,255,255,1);
 	border: 1px solid rgba(0,0,0,0.08);
 	border-radius: 4px;
 	padding: 0 1.5em;
-	color: black;
 }
 input {
 	width: 100%;

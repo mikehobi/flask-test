@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 	<div class="hello outer-box">
-		<h1>Points!</h1>
+		<h1 class="text-center">Points!</h1>
 		{% for user in users %}
-		<div class="user">
-			<h1>{{user.name}} has {{ user.points|length }} points! Today: {{user.points_today}}</h1>
+		<div class="user" {% if user.img_url %}style="background-image:url('{{user.img_url}}')" {% endif %}>
+			<h2>{{user.name}}</h2>
+			<span class="pts-today">{{user.points_today}} <small>today</small></span>
+			<span class="pts-all">{{user.points|length}} <small>all-time</small></span>
 		</div>
 		{% endfor %}
 	</div>

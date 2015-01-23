@@ -32,6 +32,7 @@ class User(db.Model):
 	name = db.Column(db.String, nullable=False)
 	points_to_give = db.Column(db.Integer, default=20)
 	points = relationship("Point", backref="user")
+	img_url = db.Column(db.String)
 
 	def __init__(self, name):
 		self.name = name
