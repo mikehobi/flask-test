@@ -1,6 +1,6 @@
 from datetime import date
 
-from flask import flash, redirect, render_template, url_for, Blueprint
+from flask import flash, redirect, render_template, url_for, Blueprint, request
 
 from project import db, slack
 from project.models import User, Point
@@ -31,8 +31,10 @@ def index():
 @home_blueprint.route('/give', methods=['GET', 'POST'])
 @slack.command('points', token='zhFK4jkUMxUlaEUsP6lE05kY', team_id='T0001', methods=['POST'])
 def response():
-    text = 'some text'
+    who = request.form['user_name']
+    text = 'some text courtesy of {}'.format(who)
     return slack.response(text)
+
 def give():
 
 	points_form = GivePoints()
