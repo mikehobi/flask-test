@@ -6,6 +6,7 @@ from flask import Flask, render_template, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
 from flask_slack import Slack
+
 import os
 
 ################
@@ -24,11 +25,6 @@ from project.home.views import home_blueprint
 # register our blueprints
 app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
-
-@slack.command('points', token='zhFK4jkUMxUlaEUsP6lE05kY', team_id='T0001', methods=['POST'])
-def response():
-    text = 'some text'
-    return slack.response(text)
 
 @app.errorhandler(403)
 def server_error_403(error):

@@ -29,7 +29,12 @@ def index():
 	return render_template('index.html', **ctx)
 
 @home_blueprint.route('/give', methods=['GET', 'POST'])
+@slack.command('points', token='zhFK4jkUMxUlaEUsP6lE05kY', team_id='T0001', methods=['POST'])
+def response():
+    text = 'some text'
+    return slack.response(text)
 def give():
+
 	points_form = GivePoints()
 
 	if points_form.validate_on_submit():
