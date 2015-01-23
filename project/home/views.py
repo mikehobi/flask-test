@@ -68,7 +68,7 @@ def response():
 	webhook_url = 'https://hooks.slack.com/services/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'
 	payload = {
         'text': '{} just gave {} POINT{} to {}!!!!!!!'.format(from_user.name,points,'' if points == 1 else 'S',to_user.name),
-		'channel': '#' + request.form.get('channel_name')
+		'channel': '#' + channel
     }
 	req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
 	if req.status_code != 200:
