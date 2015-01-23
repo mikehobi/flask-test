@@ -35,7 +35,7 @@ def response():
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
 	if not request.form.get('text'):
-		return slack.response('type "/points <user> <amount>" to give <http://hobiz.herokuapp.com/|POINTS!>')
+		return slack.response('type "/points [user] [amount]" to give <http://hobiz.herokuapp.com/|POINTS!>')
 	from_user = request.form.get('user_name')
 	text = request.form.get('text').split()
 	from_user = db.session.query(User).filter(User.name == from_user).first()
@@ -45,7 +45,7 @@ def response():
 		return slack.response('what do you mean wut? it\'s POINTS')
 	if text[0] == 'img':
 		if not text[1]:
-			return slack.response('are you trying to change your image bro?? type /points img <image url>')
+			return slack.response('are you trying to change your image bro?? type /points img [image url]')
 		from_user.img_url = text[1]
 		db.session.commit()
 		return slack.response('you just changed your image, congratz man')
