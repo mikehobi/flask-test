@@ -34,8 +34,6 @@ def response():
 	channel = request.form.get('channel_name')
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
-	if not request.form:
-		return 'What happened there.'
 	if not request.form.get('text'):
 		return slack.response('type "/points <user> <amount>" to give <http://hobiz.herokuapp.com/|POINTS!>')
 	from_user = request.form.get('user_name')
