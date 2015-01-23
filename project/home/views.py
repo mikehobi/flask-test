@@ -67,7 +67,7 @@ def response():
 	db.session.commit()
 	webhook_url = 'https://hooks.slack.com/services/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'
 	payload = {
-        'text': '{} just gave {} POINT{} to {}!!!!!!!'.format(from_user.name,points,'' if points == 1 else 'S',to_user.name),
+        'text': '{} just gave {} POINT{} to {}!!!!!!! <http://hobiz.herokuapp.com/|View the points board>'.format(from_user.name,points,'' if points == 1 else 'S',to_user.name),
 		'channel': '#' + channel
     }
 	req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
