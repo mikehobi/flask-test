@@ -2,8 +2,15 @@
 {% block content %}
 	<div class="hello outer-box">
 		<h1>Points!</h1>
+		{{users}}
 		{% for user in users %}
-			<h1>{{user.name}} has {{ user.points|length }} points!</h1>
+		<div class="user">
+			<h1>{{user.name}} has {{ user.points|length }} points! Today: {{user.points_today}}</h1>
+			{% if user.points %}
+			He's got 'em
+
+			{% endif %}
+		</div>
 		{% endfor %}
 	</div>
 {% endblock %}

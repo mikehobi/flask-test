@@ -14,9 +14,24 @@ home_blueprint = Blueprint(
 
 @home_blueprint.route('/')
 def index():
-	users = db.session.query(User)
-	users = sorted(users, key= lambda x: users[x].redemptions, reverse=True)
-	return render_template('index.html', users=users)
+	users = db.session.query(User).all()
+
+	for user in users:
+		points = db.session.query(Point).filter_by(user_id=user.id).count()
+		user.points_today = points
+
+	# SELECT users.name, COUNT(points.id) FROM points JOIN users ON points.user_id=users.id GROUP BY name;
+	# users = db.session.query(User, db.func.count(Point.id)).outerjoin(Point).group_by(User.id)
+
+	# user = db.session.query(Point.id, func.count(Run.session_id).label('count')).group_by(Run.session_id).subquery()
+	# result = db.session.query(Session, sq.c.count).join(sq, sq.c.session_id == Session.id).all()
+	# qry = select([ this.id, select([func.count().label('xx')], this.id == that.this_id).as_scalar().label('thatcount'), ])
+
+	ctx = {
+        'users': users
+    }
+
+	return render_template('index.html', **ctx)
 
 @home_blueprint.route('/give', methods=['GET', 'POST'])
 def give():
@@ -38,7 +53,7 @@ def give():
 				for i in range(0,n):
 					point = Point(user.id)
 					db.session.add(point)
-				flash('You gave {} points!').format(user.name)
+				flash('You gave points!')
 				db.session.commit()
 				return redirect( url_for('home.index') )
 		else:
