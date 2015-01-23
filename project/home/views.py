@@ -2,7 +2,7 @@ from datetime import date
 
 from flask import flash, redirect, render_template, url_for, Blueprint
 
-from project import db
+from project import db, slack
 from project.models import User, Point
 
 from .form import GivePoints
@@ -13,6 +13,12 @@ home_blueprint = Blueprint(
 )
 
 # ROUTES
+
+@slack.command('points', token='zhFK4jkUMxUlaEUsP6lE05kY',
+               team_id='T0001', methods=['POST'])
+def your_method(**kwargs):
+    text = kwargs.get('this is some goddamn text')
+    return slack.response(text)
 
 @home_blueprint.route('/')
 def index():
