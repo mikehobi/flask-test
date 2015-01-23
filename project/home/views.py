@@ -36,6 +36,7 @@ def response():
     if text[0] == 'img_url':
     	from_user = db.session.query(User).filter(User.name == from_user).first()
     	from_user.img_url = text[1]
+    	db.session.commit()
     	return slack.response('You just changed your image, congratz')
     to_user = text[0]
     points = int(text[1])
