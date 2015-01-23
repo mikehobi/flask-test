@@ -29,7 +29,7 @@ def index():
 	return render_template('index.html', **ctx)
 
 @home_blueprint.route('/give', methods=['GET', 'POST'])
-@slack.command('points', token='zhFK4jkUMxUlaEUsP6lE05kY', team_id='T0001', methods=['POST'])
+@slack.command('points', token='qm76q99wz5FNKiNvoYCVkfnw', team_id='T0001', methods=['POST'])
 def response():
     from_user = request.form['user_name']
     text = request.form['text'].split()
@@ -49,7 +49,7 @@ def response():
 				db.session.add(point)
 			db.session.commit()
 			return slack.response('You {} gave points!').format(to_user)
-    return slack.response(text)
+    return slack.response(text)	
 
 # def give():
 
