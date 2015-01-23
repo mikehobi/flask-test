@@ -1,11 +1,11 @@
+import json
+import requests
 from datetime import date
 
 from flask import flash, redirect, render_template, url_for, Blueprint, request
 
 from project import db, slack
 from project.models import User, Point
-
-from .form import GivePoints
 
 home_blueprint = Blueprint(
 	'home', __name__,
@@ -31,63 +31,51 @@ def index():
 @home_blueprint.route('/give', methods=['GET', 'POST'])
 @slack.command('points', token='qm76q99wz5FNKiNvoYCVkfnw', team_id='T0001', methods=['POST'])
 def response():
-	if request.form:
-	    from_user = request.form['user_name']
-	    text = request.form['text'].split()
-	    from_user = db.session.query(User).filter(User.name == from_user).first()
-	    if text[0] == 'wut':
-	    	return slack.response('What do you mean wut? it\'s POINTS man')
-	    if text[0] == 'img':
-	    	from_user.img_url = text[1]
-	    	db.session.commit()
-	    	return slack.response('You just changed your image, congratz')
-	return 'hey'
-   #  to_user = text[0]
-   #  points = int(text[1])
-   #  to_user = db.session.query(User).filter(User.name == to_user).first()
-   #  if to_user != None and from_user != None:
-   #  	available_points = from_user.points_to_give
-   #  	if available_points == 0:
-   #  		return slack.response('You don\'t have any points left today!')
-   #  	if available_points - points < 0:
-   #  		return slack.response('You don\'t have enough points! You have {} points left today.').format(available_points)
-   #  	else:
-			# from_user.points_to_give -= points
-			# n = points
-			# for i in range(0,n):
-			# 	point = Point(to_user.id)
-			# 	db.session.add(point)
-			# db.session.commit()
-			# return slack.response('You {} gave points!').format(to_user)
-   #  return slack.response('Couldn\'t give points for some reason or another')	
-
-# def give():
-
-# 	points_form = GivePoints()
-
-# 	if points_form.validate_on_submit():
-# 		# get the from user
-# 		from_user = db.session.query(User).filter(User.name == points_form.from_user.data).first()
-
-# 		# get the to user
-# 		user = db.session.query(User).filter(User.name == points_form.user.data).first()
-# 		if user != None and from_user != None:
-# 			available_points = from_user.points_to_give
-# 			if available_points - int(points_form.amount.data) < 0:
-# 				flash('You don\'t have enough points')
-# 			else:
-# 				from_user.points_to_give -= int(points_form.amount.data)
-# 				n = int(points_form.amount.data)
-# 				for i in range(0,n):
-# 					point = Point(user.id)
-# 					db.session.add(point)
-# 				flash('You gave points!')
-# 				db.session.commit()
-# 				return redirect( url_for('home.index') )
-# 		else:
-# 			flash('something went terribly wrong.')
-
-# 	return render_template('give.html', form=points_form)
+	channel = request.form.get('channel_name')
+	if channel == 'directmessage':
+		return slack.response('can\'t give POINTS in direct message, public generosity only!')
+	if not request.form:
+		return 'What happened there.'
+	if not request.form.get('text'):
+		return slack.response('type "/points <user> <amount>" to give <http://hobiz.herokuapp.com/|POINTS!>')
+	from_user = request.form.get('user_name')
+	text = request.form.get('text').split()
+	from_user = db.session.query(User).filter(User.name == from_user).first()
+	if text[0] == 'help':
+		return slack.response('figure out yourself, just kidding <http://hobiz.herokuapp.com/halp|click here bro>')
+	if text[0] == 'wut':
+		return slack.response('what do you mean wut? it\'s POINTS')
+	if text[0] == 'img':
+		if not text[1]:
+			return slack.response('are you trying to change your image bro?? type /points img <image url>')
+		from_user.img_url = text[1]
+		db.session.commit()
+		return slack.response('you just changed your image, congratz man')
+	to_user = text[0]
+	to_user = db.session.query(User).filter(User.name == to_user).first()
+	if to_user is None:
+		return slack.response('wrong. make sure you do user before points.')
+	points = int(text[1])
+	available_points = from_user.points_to_give
+	if available_points == 0:
+		return slack.response('you don\'t have any points left today, like literally zero dude')
+	if available_points - points < 0:
+		return slack.response('you don\'t have enough points! you have {} left for today.'.format(available_points))
+	from_user.points_to_give -= points
+	n = points
+	for i in range(0,n):
+		point = Point(to_user.id)
+		db.session.add(point)
+	db.session.commit()
+	webhook_url = 'https://hooks.slack.com/services/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'
+	payload = {
+        'text': '{} just gave {} POINT{} to {}!!!!!!!'.format(from_user.name,points,'' if points == 1 else 'S',to_user.name),
+		'channel': '#' + request.form.get('channel_name')
+    }
+	req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
+	if req.status_code != 200:
+ 		return slack.response('Error: {}'.format(req.content))
+	return slack.response('')
 
 @home_blueprint.route('/user/<username>')
 def profile(username):
@@ -97,3 +85,7 @@ def profile(username):
 	else:
 		flash('That user does not exist.')
 		return redirect(url_for('home.index'))
+
+@home_blueprint.route('/halp')
+def help():
+	return render_template('help.html')
