@@ -1,5 +1,6 @@
 @import 'bourbon/bourbon';
 @import 'neat/neat';
+@import 'animations/animations';
 
 * {
 	box-sizing: border-box;
@@ -11,7 +12,7 @@ html, body {
 	min-height: 100%;
 }
 body {
-	background: #111;
+	background: #111415;
 	color: white;
 	font-size: 16px;
 	line-height: 1.5em;
@@ -30,6 +31,7 @@ h1 {
 }
 .message {
 	color: black;
+	text-align: center;
 	background: #fff4a6;
 	border-bottom: #d9d18d;
 	padding: .5em 1.5em;
@@ -43,6 +45,7 @@ div.user {
 	text-align:center;
 	position: relative;
 	background: {
+		color: rgba(20,30,30,1);
 		size: cover;
 		repeat: no-repeat;
 	}
@@ -81,6 +84,7 @@ div.user {
 		z-index: 0;
 	}
 	&:hover {
+		@include animation(squeeze 200ms ease-in);
 		&:after {
 			background: rgba(0,0,0,0.1);
 		}
