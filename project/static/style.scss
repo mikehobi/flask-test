@@ -1,0 +1,58 @@
+* {
+	box-sizing: border-box;
+}
+* + * {
+	margin-top: 1.5em;
+}
+html, body {
+	min-height: 100%;
+}
+body {
+	background: #eee;
+	font-size: 16px;
+	line-height: 1.5em;
+	margin: 0;
+	font-family: Helvetica, sans-serif;
+}
+.container {
+	width: 80%;
+	margin: 0 auto;
+	max-width: 700px;
+}
+.message {
+	background: #fff4a6;
+	border-bottom: #d9d18d;
+	padding: .5em 1.5em;
+	margin: 0;
+}
+.outer-box {
+	color: #222;
+	padding: 1.5em;
+}
+.box {
+	background: rgba(255,255,255,1);
+	border: 1px solid rgba(0,0,0,0.08);
+	border-radius: 4px;
+	padding: 0 1.5em;
+	color: black;
+}
+input {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #ccc;
+}
+button[type="submit"] {
+	-webkit-appearance: none;
+	background: #702217;
+	color: white;
+	border: 0;
+	padding: 10px 20px;
+	border-radius: 4px;
+}
+textarea {
+	width: 100%;
+	padding: 10px;
+	min-height: 150px;
+
+	border: 1px solid #ccc;
+}

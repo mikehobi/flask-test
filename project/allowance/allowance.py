@@ -9,3 +9,20 @@ class GiveAllowance(Command):
 			user.points_to_give = 20
 
 		db.session.commit()
+
+class DeleteUsers(Command):
+	def run(self):
+		for user in db.session.query(User):
+			db.session.delete(user)
+			db.session.commit()
+
+class CreateUsers(Command):
+	def run(self):
+		db.session.add(User("mike"))
+		db.session.add(User("ana"))
+		db.session.add(User("sean"))
+		db.session.add(User("nick"))
+		db.session.add(User("trev"))
+		db.session.add(User("zak"))
+		db.session.add(User("hakeem"))
+		db.session.commit()
