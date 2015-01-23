@@ -33,7 +33,7 @@ def index():
 def response():
     from_user = request.form['user_name']
     text = request.form['text'].split()
-    if text[0] == 'img_url':
+    if text[0] == 'img':
     	from_user = db.session.query(User).filter(User.name == from_user).first()
     	from_user.img_url = text[1]
     	db.session.commit()
@@ -41,20 +41,22 @@ def response():
     to_user = text[0]
     points = int(text[1])
     from_user = db.session.query(User).filter(User.name == from_user).first()
-    user = db.session.query(User).filter(User.name == to_user).first()
-    if user != None and from_user != None:
+    to_user = db.session.query(User).filter(User.name == to_user).first()
+    if to_user != None and from_user != None:
     	available_points = from_user.points_to_give
+    	if available_points == 0:
+    		slack.response('You don\'t have any points left today!')
     	if available_points - points < 0:
-    		slack.response('You don\'t have enough points')
+    		slack.response('You don\'t have enough points! You have {} points left today.').format(available_points)
     	else:
 			from_user.points_to_give -= points
 			n = points
 			for i in range(0,n):
-				point = Point(user.id)
+				point = Point(to_user.id)
 				db.session.add(point)
 			db.session.commit()
 			return slack.response('You {} gave points!').format(to_user)
-    return slack.response(text)	
+    return slack.response('Couldn\'t give points for some reason or another')	
 
 # def give():
 
