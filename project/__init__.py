@@ -2,7 +2,7 @@
 #### imports ####
 #################
 
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
 from flask_slack import Slack
@@ -28,7 +28,7 @@ app.register_blueprint(home_blueprint)
 
 @app.errorhandler(403)
 def server_error_403(error):
-    return redirect(url_for('home.index'))
+    return 'wut'
 
 @app.errorhandler(404)
 def server_error_404(error):
@@ -36,4 +36,4 @@ def server_error_404(error):
 
 @app.errorhandler(500)
 def server_error_500(error):
-    return render_template('500.html'), 500
+    return 'something went terribly wrong'

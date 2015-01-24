@@ -49,12 +49,14 @@ def response():
 		from_user.img_url = text[1]
 		db.session.commit()
 		return slack.response('you just changed your image, congratz man')
+	available_points = from_user.points_to_give
+	if text[0] == 'balance':
+		return slack.response('You have {} left for today.'.format(available_points))
 	to_user = text[0]
 	to_user = db.session.query(User).filter(User.name == to_user).first()
 	if to_user is None:
 		return slack.response('wrong. make sure you do user before points.')
 	points = int(text[1])
-	available_points = from_user.points_to_give
 	if available_points == 0:
 		return slack.response('you don\'t have any points left today, like literally zero dude')
 	if available_points - points < 0:
