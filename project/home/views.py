@@ -31,6 +31,7 @@ def index():
 @home_blueprint.route('/give', methods=['GET', 'POST'])
 @slack.command('points', token='qm76q99wz5FNKiNvoYCVkfnw', team_id='T0001', methods=['POST'])
 def response():
+	webhook_url = 'https://hooks.slack.com/services/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'
 	channel = request.form['channel_name']
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
@@ -54,8 +55,17 @@ def response():
 		return slack.response('You have {} left for today.'.format(available_points))
 	to_user = text[0]
 	to_user = db.session.query(User).filter(User.name == to_user).first()
+	if to_user == from_user:
+		payload = {
+	        'text': '{} just unsuccessfully tried to give himself points! Everybody point and laugh!'.format(from_user.name),
+			'channel': '#' + channel
+	    }
+		req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
+		if req.status_code != 200:
+	 		return slack.response('Error: {}'.format(req.content))
+		return slack.response('')
 	if to_user is None:
-		return slack.response('wrong. make sure you do user before points.')
+		return slack.response('wrong. make sure you do [user] before [points].')
 	points = int(text[1])
 	if available_points == 0:
 		return slack.response('you don\'t have any points left today, like literally zero dude')
@@ -67,7 +77,6 @@ def response():
 		point = Point(to_user.id)
 		db.session.add(point)
 	db.session.commit()
-	webhook_url = 'https://hooks.slack.com/services/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'
 	payload = {
         'text': '{} just gave {} POINT{} to {}!!!!!!! <http://hobiz.herokuapp.com/|View the points board>'.format(from_user.name,points,'' if points == 1 else 'S',to_user.name),
 		'channel': '#' + channel
