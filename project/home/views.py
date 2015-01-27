@@ -67,6 +67,8 @@ def response():
 	if to_user is None:
 		return slack.response('wrong. make sure you do [user] before [points].')
 	points = int(text[1])
+	if points <= 0:
+		return slack.response('chill bro, points is about positivity, man')
 	if available_points == 0:
 		return slack.response('you don\'t have any points left today, like literally zero dude')
 	if available_points - points < 0:
