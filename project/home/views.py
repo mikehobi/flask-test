@@ -31,7 +31,7 @@ def index():
 @home_blueprint.route('/give', methods=['GET', 'POST'])
 @slack.command('points', token='GgJwa8yXtnGGzRtil9jBVnVp', team_id='T0001', methods=['POST'])
 def response():
-	webhook_url = 'https://hooks.slack.com/services/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'
+	webhook_url = 'https://hooks.slack.com/services/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'
 	channel = request.form['channel_name']
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
