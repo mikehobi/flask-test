@@ -36,12 +36,12 @@ def response():
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
 	if not request.form['text']:
-		return slack.response('type "/points [user] [amount]" to give <{}/|POINTS!>'.format( url_for('home.index', _external=True) ))
+		return slack.response('type "/points [user] [amount]" to give <{}/|POINTS!>'.format(url_for('home.index', _external=True)))
 	from_user = request.form['user_name']
 	text = request.form['text'].split()
 	from_user = db.session.query(User).filter(User.name == from_user).first()
 	if text[0] == 'help':
-		return slack.response('figure out yourself, just kidding <http://hobiz.herokuapp.com/halp|click here bro>')
+		return slack.response('figure out yourself, just kidding <{}/halp|click here bro>'.format(url_for('home.index', _external=True)))
 	if text[0] == 'wut':
 		return slack.response('what do you mean wut? it\'s POINTS')
 	if text[0] == 'img':
