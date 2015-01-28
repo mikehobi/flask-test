@@ -4,7 +4,7 @@ from datetime import date
 
 from flask import flash, redirect, render_template, url_for, Blueprint, request
 
-from project import db, slack
+from project import db, slack, app
 from project.models import User, Point
 
 home_blueprint = Blueprint(
@@ -29,9 +29,9 @@ def index():
 	return render_template('index.html', **ctx)
 
 @home_blueprint.route('/give', methods=['GET', 'POST'])
-@slack.command('points', token='GgJwa8yXtnGGzRtil9jBVnVp', team_id='T0001', methods=['POST'])
+@slack.command('points', token=app.config['SLACK_TOKEN'], team_id='T0001', methods=['POST'])
 def response():
-	webhook_url = 'https://hooks.slack.com/services/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'
+	webhook_url = app.config['WEBHOOK']
 	channel = request.form['channel_name']
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
