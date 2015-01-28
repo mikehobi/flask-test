@@ -36,7 +36,7 @@ def response():
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
 	if not request.form['text']:
-		return slack.response('type "/points [user] [amount]" to give <http://hobiz.herokuapp.com/|POINTS!>')
+		return slack.response('type "/points [user] [amount]" to give <{}/|POINTS!>'.format( url_for('home.index', _external=True) ))
 	from_user = request.form['user_name']
 	text = request.form['text'].split()
 	from_user = db.session.query(User).filter(User.name == from_user).first()
@@ -80,7 +80,7 @@ def response():
 		db.session.add(point)
 	db.session.commit()
 	payload = {
-        'text': '{} just gave {} POINT{} to {}!!!!!!! <http://hobiz.herokuapp.com/|View the points board>'.format(from_user.name,points,'' if points == 1 else 'S',to_user.name),
+        'text': '{} just gave {} POINT{} to {}!!!!!!! <{}|View the points board>'.format(from_user.name,points,'' if points == 1 else 'S',to_user.name, url_for('home.index', _external=True)),
 		'channel': '#' + channel
     }
 	req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
