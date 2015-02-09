@@ -74,7 +74,7 @@ def response():
 		db.session.add(point)
 		db.session.commit()
 		payload = {
-	        'text': '{} just tried to give himself {} point{}! Instead we\'ll randomly ONE point to {}!'.format(from_user.name,points,rand_user.name),
+	        'text': '{} just tried to give himself {} point{}! Instead we\'ll randomly ONE point to {}!'.format(from_user.name,points,'' if points == 1 else 'S',rand_user.name),
 			'channel': '#' + channel
 	    }
 		req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
