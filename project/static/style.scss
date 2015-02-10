@@ -60,7 +60,7 @@ div.user {
 	}
 	h2 {
 		font-size: 2em;
-		margin-bottom:3em;
+		margin-bottom: 2.5em;
 		position: relative;
 		z-index: 1;
 	}
@@ -73,14 +73,16 @@ div.user {
 		margin-top: 10px;
 	}
 	.pts-today {
-		font-size: 3em;
+		font-size: 3.5em;
 		display: block;
 		position: relative;
 		z-index: 1;
 	}
 	.pts-all {
+		width: 50%;
+		float: left;
 		display: block;
-		font-size: 1.9em;
+		font-size: 1.85em;
 		position: relative;
 		z-index: 1;
 	}
