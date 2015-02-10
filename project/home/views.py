@@ -49,8 +49,8 @@ def response():
 	from_user = db.session.query(User).filter(User.name == from_user).first()
 	if text[0] == 'help':
 		return slack.response('figure out yourself, just kidding <{}/halp|click here bro>'.format(url_for('home.index', _external=True)))
-	if text[0] == 'wut':
-		return slack.response('what do you mean wut? it\'s POINTS')
+	if text[0] == 'why':
+		return slack.response('Because I said so.')
 	if text[0] == 'img':
 		if not text[1]:
 			return slack.response('are you trying to change your image bro?? type /points img [image url]')
