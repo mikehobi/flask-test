@@ -20,8 +20,14 @@ def index():
 	users = db.session.query(User).all()
 
 	for user in users:
-		points = db.session.query(Point).filter(Point.created_at >= date.today()).filter_by(user_id=user.id).count()
-		user.points_today = points
+		today = date.today()
+
+		ptz_today = db.session.query(Point).filter(Point.created_at >= today).filter_by(user_id=user.id).count()
+		user.points_today = ptz_today
+
+		this_month = date(today.year, today.month, 1)
+		ptz_month = db.session.query(Point).filter(Point.created_at >= this_month).filter_by(user_id=user.id).count()
+		user.points_this_month = ptz_month
 
 	ctx = {
         'users': users

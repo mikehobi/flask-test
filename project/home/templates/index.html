@@ -6,6 +6,7 @@
 		<div class="user" {% if user.img_url %}style="background-image:url('{{user.img_url}}')" {% endif %}>
 			<h2>{{user.name}}</h2>
 			<span class="pts-today">{{user.points_today}} <small>today</small></span>
+			<span class="pts-all">{{user.points_this_month}} <small>this month</small></span>
 			<span class="pts-all">{{user.points|length}} <small>all-time</small></span>
 		</div>
 		{% endfor %}
