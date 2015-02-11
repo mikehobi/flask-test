@@ -76,7 +76,7 @@ def response():
 		rand = random.randrange(0, db.session.query(User).count()) 
 		rand_user = db.session.query(User)[rand]
 		from_user.points_to_give -= 1
-		point = Point(rand_user.id,is_rand=True)
+		point = Point(rand_user.id,is_rand='t')
 		db.session.add(point)
 		db.session.commit()
 		payload = {
