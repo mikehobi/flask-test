@@ -36,4 +36,4 @@ def server_error_404(error):
 
 @app.errorhandler(500)
 def server_error_500(error):
-    return 'something went terribly wrong'
+    return 'something went terribly wrong, tell @mike'
