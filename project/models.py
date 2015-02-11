@@ -56,6 +56,8 @@ class Point(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	created_at = db.Column(db.DateTime, default=datetime.now)
 	user_id = db.Column(db.Integer, ForeignKey('users.id'))
+	is_rand = db.Column(db.Boolean(), default=False)
+	is_spent = db.Column(db.Boolean(), default=False)
 
 	def __init__(self, user_id):
  		self.user_id = user_id
