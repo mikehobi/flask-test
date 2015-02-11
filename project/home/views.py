@@ -45,9 +45,9 @@ def response():
 	if not request.form['text']:
 		return slack.response('type "/points [user] [amount]" to give <{}/|POINTS!>'.format(url_for('home.index', _external=True)))
 	from_user = request.form['user_name']
-	available_points = from_user.points_to_give
 	text = request.form['text'].split()
 	from_user = db.session.query(User).filter(User.name == from_user).first()
+	available_points = from_user.points_to_give
 	if text[0] == 'help':
 		return slack.response('figure out yourself, just kidding <{}/halp|click here bro>'.format(url_for('home.index', _external=True)))
 	if text[0] == 'why':
