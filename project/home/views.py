@@ -60,7 +60,10 @@ def response():
 		from_user.img_url = text[1]
 		db.session.commit()
 		return slack.response('you just changed your image, congratz man')
-	points = int(text[1])
+	try:
+		points = int(text[1])
+	except:
+		return slack.response('seriously? don\'t make me do that kind of math')
 	to_user = text[0]
 	to_user = db.session.query(User).filter(User.name == to_user).first()
 	if to_user is None:
@@ -71,7 +74,7 @@ def response():
 		return slack.response('you don\'t have any points left today, like literally zero dude')
 	if available_points - points < 0:
 		return slack.response('you don\'t have enough points! you have {} left for today.'.format(available_points))
-
+	# if to_user == from_user == db.session.query(User).filter(User.name == 'hakeem').first():
 	if to_user == from_user:
 		rand = random.randrange(0, db.session.query(User).count()) 
 		rand_user = db.session.query(User)[rand]
