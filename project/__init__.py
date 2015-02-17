@@ -59,7 +59,7 @@ def response(**kwargs):
 	try:
 		points = int(text[1])
 	except:
-		return slack.response('seriously? don\'t make me do that kind of math')
+		return slack.response('hahah... uh what?')
 	to_user = text[0]
 	to_user = db.session.query(User).filter(User.name == to_user).first()
 	if to_user is None:
