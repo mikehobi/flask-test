@@ -25,6 +25,7 @@ from project.home.views import home_blueprint
 # register our blueprints
 app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
+app.add_url_rule('/give', view_func=slack.dispatch)
 
 @app.errorhandler(403)
 def server_error_403(error):

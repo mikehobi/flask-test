@@ -35,7 +35,7 @@ def index():
 
 	return render_template('index.html', **ctx)
 
-@home_blueprint.route('/give', methods=['GET', 'POST'])
+# @home_blueprint.route('/give', methods=['GET', 'POST'])
 @slack.command('points', token=app.config['SLACK_TOKEN'], team_id='T0001', methods=['POST'])
 def response():
 	return slack.response('brb folks')
