@@ -32,8 +32,8 @@ app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
 app.add_url_rule('/give', view_func=slack.dispatch)
 
-@slack.command('points', token=app.config['SLACK_TOKEN'], team_id='T0001', methods=['POST'])
-def response():
+@slack.command('points', token=app.config['SLACK_TOKEN'], team_id='T0268B6CZ', methods=['POST'])
+def response(**kwargs):
 	return slack.response('brb folks')
 
 	webhook_url = app.config['WEBHOOK']
