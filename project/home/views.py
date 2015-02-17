@@ -32,8 +32,6 @@ def index():
 
 	return render_template('index.html', **ctx)
 
-# @home_blueprint.route('/give', methods=['GET', 'POST'])
-
 @home_blueprint.route('/user/<username>')
 def profile(username):
 	user = db.session.query(User).filter(User.name == username).first()
