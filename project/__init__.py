@@ -79,7 +79,7 @@ def response(**kwargs):
 		db.session.add(point)
 		db.session.commit()
 		payload = {
-	        'text': '@{} just tried to give himself {} point{}! Instead we\'ll randomly give ONE point to @{}!'.format(from_user.name,points,'' if points == 1 else 's',rand_user.name),
+	        'text': '{} just tried to give himself {} point{}! Instead we\'ll randomly give ONE point to {}!'.format(from_user.name,points,'' if points == 1 else 's',rand_user.name),
 			'channel': '#' + channel
 	    }
 		req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
@@ -93,7 +93,7 @@ def response(**kwargs):
 		db.session.add(point)
 	db.session.commit()
 	payload = {
-        'text': '@{} just gave {} POINT{} to @{}!!!!!!! <{}|View the points board>'.format(from_user.name,points,'' if points == 1 else 'S',to_user.name, url_for('home.index', _external=True)),
+        'text': '{} just gave {} POINT{} to {}!!!!!!! <{}|View the points board>'.format(from_user.name,points,'' if points == 1 else 'S',to_user.name, url_for('home.index', _external=True)),
 		'channel': '#' + channel
     }
 	req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
