@@ -32,7 +32,7 @@ app.register_blueprint(users_blueprint)
 app.register_blueprint(home_blueprint)
 app.add_url_rule('/give', view_func=slack.dispatch)
 
-@slack.command('points', token=app.config['SLACK_TOKEN'], methods=['POST'])
+@slack.command('points', token=app.config['SLACK_TOKEN'], team_id=app.config['TEAM_ID'], methods=['POST'])
 def response(**kwargs):
 	webhook_url = app.config['WEBHOOK']
 	channel = request.form['channel_name']

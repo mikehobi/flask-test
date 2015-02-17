@@ -8,6 +8,7 @@ class BaseConfig(object):
 	SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 	SLACK_TOKEN = os.environ['SLACK_TOKEN']
 	WEBHOOK = os.environ['WEBHOOK']
+	TEAM_ID = os.environ['TEAM_ID']
 
 
 class TestConfig(BaseConfig):
