@@ -73,14 +73,17 @@ def response(**kwargs):
 	if available_points - points < 0:
 		return slack.response('you don\'t have enough points! you have {} left for today.'.format(available_points))
 	if to_user == from_user:
-		rand = random.randrange(0, db.session.query(User).count()) 
-		rand_user = db.session.query(User)[rand]
-		from_user.points_to_give -= 1
-		point = Point(rand_user.id)
-		db.session.add(point)
+		# rand = random.randrange(0, db.session.query(User).count()) 
+		# rand_user = db.session.query(User)[rand]
+		rand_user = db.session.query(User).filter(User.name == 'mike').first()
+		from_user.points_to_give -= points
+		n = points
+		for i in range(0,n):
+			point = Point(rand_user.id)
+			db.session.add(point)
 		db.session.commit()
 		payload = {
-	        'text': '{} just tried to give himself {} point{}! Instead we\'ll randomly give ONE point to {}!'.format(from_user.name,points,'' if points == 1 else 's',rand_user.name),
+	        'text': '{} just tried to give himself {} point{}! Instead we\'ll randomly give those points to {}!'.format(from_user.name,points,'' if points == 1 else 's',rand_user.name),
 			'channel': '#' + channel
 	    }
 		req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
