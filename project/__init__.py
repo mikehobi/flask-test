@@ -34,8 +34,7 @@ app.add_url_rule('/give', view_func=slack.dispatch)
 
 @slack.command('points', token=app.config['SLACK_TOKEN'], team_id=app.config['TEAM_ID'], methods=['POST'])
 def response(self, **kwargs):
-	referer = self.request.META.get('HTTP_REFERER')
-	return slack.response(referer)
+	return slack.response(request.headers.get('Referer'))
 	webhook_url = app.config['WEBHOOK']
 	channel = request.form['channel_name']
 	if channel == 'directmessage':
