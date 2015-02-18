@@ -40,6 +40,8 @@ def response(**kwargs):
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
 	if not request.form['text']:
 		return slack.response('type "/points [user] [amount]" to give <{}/|POINTS!>'.format(url_for('home.index', _external=True)))
+	if request.form['text'] == 'debug':
+		return slack.response(request.headers)
 	from_user = request.form['user_name']
 	text = request.form['text'].split()
 	from_user = db.session.query(User).filter(User.name == from_user).first()
