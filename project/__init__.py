@@ -73,11 +73,8 @@ def response(**kwargs):
 	if available_points - points < 0:
 		return slack.response('you don\'t have enough points! you have {} left for today.'.format(available_points))
 	if to_user == from_user:
-		if from_user == db.session.query(User).filter(User.name == 'hakeem').first():
-			rand_user = db.session.query(User).filter(User.name == 'mike').first()
-		else:
-			rand = random.randrange(0, db.session.query(User).count()) 
-			rand_user = db.session.query(User)[rand]
+		rand = random.randrange(0, db.session.query(User).count()) 
+		rand_user = db.session.query(User)[rand]
 		from_user.points_to_give -= 1
 		point = Point(rand_user.id)
 		db.session.add(point)
