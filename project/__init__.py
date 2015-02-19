@@ -53,11 +53,8 @@ def response(**kwargs):
 			return slack.response('One time only!')
 		from_user.user_id = slack_user_id
 		db.session.commit()
-
-		if from_user.name == 'hakeem':
-			rand = random.randrange(0, 10)
-		else:
-			rand = random.randrange(0, 100)
+		
+		rand = random.randrange(0, 100)
 
 		n = rand
 
