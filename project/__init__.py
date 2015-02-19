@@ -50,10 +50,17 @@ def response(**kwargs):
 		if from_user.user_id:
 			return slack.response('One time only!')
 		from_user.user_id = slack_user_id
-		rand = random.randrange(0, 100)
+
+		if from_user.name == 'hakeem':
+			rand = random.randrange(0, 10)
+		else:
+			rand = random.randrange(0, 100)
+
 		n = rand
+
 		for i in range(0,n):
 			point = Point(from_user.id)
+			db.session.add(point)
 		db.session.commit()
 		payload = {
 	        'text': '{} just did /points roulette and got {} point{}!!'.format(from_user.name,rand,'' if rand == 1 else 's'),
