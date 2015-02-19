@@ -34,9 +34,14 @@ app.add_url_rule('/give', view_func=slack.dispatch)
 
 @slack.command('points', token=app.config['SLACK_TOKEN'], team_id=app.config['TEAM_ID'], methods=['POST'])
 def response(**kwargs):
+	slack_user_id = request.form['user_id']
+	if slack_user_id is None:
+		return slack.response('Not going to happen.');
+	if not slack_user_id:
+		return slack.response('Nut going to happen.');
+
 	webhook_url = app.config['WEBHOOK']
 	channel = request.form['channel_name']
-	slack_user_id = request.form['user_id']
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
 	if not request.form['text']:
@@ -73,10 +78,6 @@ def response(**kwargs):
 
 	text = request.form['text'].split()
 	from_user = db.session.query(User).filter(User.name == from_user).first()
-	if slack_user_id is None:
-		return slack.response('Not going to happen.');
-	if not slack_user_id:
-		return slack.response('Nut going to happen.');
 	if from_user.user_id != slack_user_id:
 		return slack.response('Not going to happen.');
 	available_points = from_user.points_to_give
