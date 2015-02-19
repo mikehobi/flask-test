@@ -35,10 +35,6 @@ app.add_url_rule('/give', view_func=slack.dispatch)
 @slack.command('points', token=app.config['SLACK_TOKEN'], team_id=app.config['TEAM_ID'], methods=['POST'])
 def response(**kwargs):
 	slack_user_id = request.form['user_id']
-	if not request.form['user_id']:
-		return slack.response('problem problem');
-	if not slack_user_id:
-		return slack.response('Nut going to happen.');
 
 	webhook_url = app.config['WEBHOOK']
 	channel = request.form['channel_name']
@@ -52,9 +48,11 @@ def response(**kwargs):
 	# slack roulette
 	if request.form['text'] == 'roulette':
 		from_user = db.session.query(User).filter(User.name == from_user).first()
+
 		if from_user.user_id:
 			return slack.response('One time only!')
 		from_user.user_id = slack_user_id
+		db.session.commit()
 
 		if from_user.name == 'hakeem':
 			rand = random.randrange(0, 10)
