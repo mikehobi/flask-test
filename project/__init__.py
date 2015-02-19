@@ -35,8 +35,8 @@ app.add_url_rule('/give', view_func=slack.dispatch)
 @slack.command('points', token=app.config['SLACK_TOKEN'], team_id=app.config['TEAM_ID'], methods=['POST'])
 def response(**kwargs):
 	slack_user_id = request.form['user_id']
-	if slack_user_id is None:
-		return slack.response('Not going to happen.');
+	if not request.form['user_id']:
+		return slack.response('problem problem');
 	if not slack_user_id:
 		return slack.response('Nut going to happen.');
 
