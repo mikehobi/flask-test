@@ -79,7 +79,7 @@ def response(**kwargs):
 	text = request.form['text'].split()
 	from_user = db.session.query(User).filter(User.name == from_user).first()
 	if from_user.user_id != slack_user_id:
-		return slack.response('Not going to happen.');
+		return slack.response('Not going to happen!!!!!!');
 	available_points = from_user.points_to_give
 	if text[0] == 'help':
 		return slack.response('figure out yourself, just kidding <{}/halp|click here bro>'.format(url_for('home.index', _external=True)))
