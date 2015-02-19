@@ -16,6 +16,12 @@ class DeleteUsers(Command):
 			db.session.delete(user)
 			db.session.commit()
 
+class MikeIsRich(Command):
+	def run(self):
+		user = db.session.query(User).filter(User.name == 'mike').first()
+		user.points_to_give = 100
+		db.session.commit()
+
 class CreateUsers(Command):
 	def run(self):
 		db.session.add(User("mike"))

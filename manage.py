@@ -13,6 +13,8 @@ manager.add_command('db', MigrateCommand)
 
 manager.add_command("give_allowance", allowance.GiveAllowance())
 
+manager.add_command("mike_is_rich", allowance.MikeIsRich())
+
 manager.add_command("delete_users", allowance.DeleteUsers())
 
 manager.add_command("create_users", allowance.CreateUsers())
