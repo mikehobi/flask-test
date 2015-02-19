@@ -30,6 +30,7 @@ class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	created_at = db.Column(db.DateTime, default=datetime.now)
 	name = db.Column(db.String, nullable=False)
+	user_id = db.Column(db.String)
 	points_to_give = db.Column(db.Integer, default=20)
 	points = relationship("Point", backref="user")
 	img_url = db.Column(db.String)

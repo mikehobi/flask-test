@@ -36,13 +36,34 @@ app.add_url_rule('/give', view_func=slack.dispatch)
 def response(**kwargs):
 	webhook_url = app.config['WEBHOOK']
 	channel = request.form['channel_name']
+	slack_user_id = request.form['user_id']
 	if channel == 'directmessage':
 		return slack.response('can\'t give POINTS in direct message, public generosity only!')
 	if not request.form['text']:
 		return slack.response('type "/points [user] [amount]" to give <{}/|POINTS!>'.format(url_for('home.index', _external=True)))
-	if request.form['text'] == 'debug':
-		return slack.response(request.headers)
+
 	from_user = request.form['user_name']
+
+	# slack roulette
+	if request.form['text'] == 'roulette':
+		from_user = db.session.query(User).filter(User.name == from_user).first()
+		if from_user.user_id:
+			return slack.response('One time only!')
+		from_user.user_id = slack_user_id
+		rand = random.randrange(0, 100)
+		n = rand
+		for i in range(0,n):
+			point = Point(from_user.id)
+		db.session.commit()
+		payload = {
+	        'text': '{} just did /points roulette and got {} point{}!!'.format(from_user.name,rand,'' if rand == 1 else 's'),
+			'channel': '#' + channel
+	    }
+		req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
+		if req.status_code != 200:
+	 		return slack.response('Error: {}'.format(req.content))
+		return slack.response('')
+
 	text = request.form['text'].split()
 	from_user = db.session.query(User).filter(User.name == from_user).first()
 	available_points = from_user.points_to_give
