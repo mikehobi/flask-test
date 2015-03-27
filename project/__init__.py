@@ -8,7 +8,6 @@ import requests
 
 from flask import Flask, render_template, url_for, request
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.bcrypt import Bcrypt
 from flask_slack import Slack
 
 import os
@@ -18,7 +17,6 @@ import os
 ################
 
 app = Flask(__name__)
-bcrypt = Bcrypt(app)
 slack = Slack(app)
 app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
@@ -45,7 +43,7 @@ def response(**kwargs):
 
 	from_user = request.form['user_name']
 
-	# slack roulette
+	# slack roulette to get Slack's unique user id
 	if request.form['text'] == 'roulette':
 		from_user = db.session.query(User).filter(User.name == from_user).first()
 
@@ -84,7 +82,7 @@ def response(**kwargs):
 		return slack.response('You have {} left for today.'.format(available_points))
 	if text[0] == 'img':
 		if not text[1]:
-			return slack.response('are you trying to change your image bro?? type /points img [image url]')
+			return slack.response('are you trying to change your image?? type /points img [image url]')
 		from_user.img_url = text[1]
 		db.session.commit()
 		return slack.response('you just changed your image, congratz man')

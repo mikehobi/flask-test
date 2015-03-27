@@ -22,6 +22,7 @@ class MikeIsRich(Command):
 		user.points_to_give = 100
 		db.session.commit()
 
+# Slack users hard-coded. Need to figure out cross-reference w/ Slack roster
 class CreateUsers(Command):
 	def run(self):
 		db.session.add(User("mike"))
