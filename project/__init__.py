@@ -43,36 +43,14 @@ def response(**kwargs):
 
 	from_user = request.form['user_name']
 
-	# slack roulette to get Slack's unique user id
-	if request.form['text'] == 'roulette':
-		from_user = db.session.query(User).filter(User.name == from_user).first()
+	from_user = db.session.query(User).filter(User.name == from_user).first()
 
-		if from_user.user_id:
-			return slack.response('One time only!')
+	if from_user.user_id is None:
 		from_user.user_id = slack_user_id
 		db.session.commit()
-		
-		rand = random.randrange(0, 100)
-
-		n = rand
-
-		for i in range(0,n):
-			point = Point(from_user.id)
-			db.session.add(point)
-		db.session.commit()
-		payload = {
-	        'text': '{} just did /points roulette and got {} point{}!!'.format(from_user.name,rand,'' if rand == 1 else 's'),
-			'channel': '#' + channel
-	    }
-		req = requests.post(webhook_url, data={'payload': json.dumps(payload)})
-		if req.status_code != 200:
-	 		return slack.response('Error: {}'.format(req.content))
-		return slack.response('')
 
 	text = request.form['text'].split()
-	from_user = db.session.query(User).filter(User.name == from_user).first()
-	if from_user.user_id != slack_user_id:
-		return slack.response('Try /points roulette');
+
 	available_points = from_user.points_to_give
 	if text[0] == 'help':
 		return slack.response('figure out yourself, just kidding <{}/halp|click here bro>'.format(url_for('home.index', _external=True)))

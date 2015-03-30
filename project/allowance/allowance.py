@@ -27,9 +27,7 @@ class CreateUsers(Command):
 	def run(self):
 		db.session.add(User("mike"))
 		db.session.add(User("ana"))
-		db.session.add(User("sean"))
+		db.session.add(User("technojosh"))
 		db.session.add(User("nick"))
-		db.session.add(User("trev"))
 		db.session.add(User("zak"))
-		db.session.add(User("hakeem"))
 		db.session.commit()
