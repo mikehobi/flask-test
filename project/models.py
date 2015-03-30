@@ -4,7 +4,6 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
 from project import db
-from project import bcrypt
 
 # class BlogPost(db.Model):
 
